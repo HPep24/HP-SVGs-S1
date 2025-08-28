@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -309,36 +310,36 @@
         const maxSize = isMobile ? { width: 33.75 * 0.75, height: 33.75 * 0.9 * 0.75 } : { width: 262.5 * 0.75, height: 236.25 * 0.75 };
         const baseSizes = isMobile
             ? [
-                  { width: 30, height: 30 },
-                  { width: 30, height: 30 },
-                  { width: 30, height: 30 },
-                  { width: 30, height: 30 },
-                  { width: 45, height: 45 },
-                  { width: 45, height: 45 },
-                  { width: 45, height: 45 },
-                  { width: 45, height: 45 },
-                  { width: 60, height: 60 },
-                  { width: 60, height: 60 },
-                  { width: 60, height: 60 },
-                  { width: 60, height: 60 },
-                  { width: 75, height: 75 },
-                  { width: 75, height: 75 }
+                  { width: 30, height: 30 }, // 1.png 400x400
+                  { width: 22, height: 30 }, // 2.png 295x400
+                  { width: 25, height: 30 }, // 3.png 333x400
+                  { width: 25, height: 30 }, // 4.png 333x400
+                  { width: 30, height: 30 }, // 5.png 400x400
+                  { width: 30, height: 30 }, // 6.png 400x400
+                  { width: 30, height: 30 }, // 7.png 400x400
+                  { width: 21, height: 30 }, // 8.png 286x400
+                  { width: 30, height: 30 }, // 9.png 400x400
+                  { width: 30, height: 30 }, // 10.png 400x400
+                  { width: 30, height: 30 }, // 11.png 400x400
+                  { width: 30, height: 30 }, // 12.png 400x400
+                  { width: 30, height: 30 }, // 13.png 400x400
+                  { width: 24, height: 24 }  // 14.png 320x320
               ]
             : [
-                  { width: 90, height: 90 },
-                  { width: 90, height: 90 },
-                  { width: 90, height: 90 },
-                  { width: 90, height: 90 },
-                  { width: 120, height: 120 },
-                  { width: 120, height: 120 },
-                  { width: 120, height: 120 },
-                  { width: 120, height: 120 },
-                  { width: 150, height: 150 },
-                  { width: 150, height: 150 },
-                  { width: 150, height: 150 },
-                  { width: 150, height: 150 },
-                  { width: 262.5 * 0.75, height: 236.25 * 0.75 },
-                  { width: 262.5 * 0.75, height: 236.25 * 0.75 }
+                  { width: 90, height: 90 }, // 1.png 400x400
+                  { width: 66, height: 90 }, // 2.png 295x400
+                  { width: 75, height: 90 }, // 3.png 333x400
+                  { width: 75, height: 90 }, // 4.png 333x400
+                  { width: 90, height: 90 }, // 5.png 400x400
+                  { width: 90, height: 90 }, // 6.png 400x400
+                  { width: 90, height: 90 }, // 7.png 400x400
+                  { width: 64, height: 90 }, // 8.png 286x400
+                  { width: 90, height: 90 }, // 9.png 400x400
+                  { width: 90, height: 90 }, // 10.png 400x400
+                  { width: 90, height: 90 }, // 11.png 400x400
+                  { width: 90, height: 90 }, // 12.png 400x400
+                  { width: 90, height: 90 }, // 13.png 400x400
+                  { width: 72, height: 72 }  // 14.png 320x320
               ].map(size => ({
                   width: Math.min(size.width, maxSize.width),
                   height: Math.min(size.height, maxSize.height)
@@ -427,7 +428,8 @@
             function changeSize() {
                 const scale = 0.5 + Math.random() * 0.5;
                 currentSize.width = Math.min(baseSize.width * scale, maxSize.width);
-                currentSize.height = Math.min(baseSize.height * scale, maxSize.height);
+                currentSize.height = (baseSize.height / baseSize.width) * currentSize.width; // Maintain aspect ratio
+                currentSize.height = Math.min(currentSize.height, maxSize.height); // Cap height
                 imageSquare.style.width = `${currentSize.width}px`;
                 imageSquare.style.height = `${currentSize.height}px`;
                 setTimeout(changeSize, Math.random() * 5000 + 2000);
@@ -544,3 +546,4 @@
     </script>
 </body>
 </html>
+```
