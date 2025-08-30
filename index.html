@@ -1,10 +1,9 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive HNFT Pepe Page</title>
+    <title>Interactive HNFT Pepe 3D Planets</title>
     <style>
         body {
             margin: 0;
@@ -13,6 +12,7 @@
             font-family: 'Courier New', Courier, monospace;
             width: 100vw;
             height: 100vh;
+            position: relative;
         }
 
         #stars-container {
@@ -37,6 +37,13 @@
             50% { opacity: 0.9; }
         }
 
+        #container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+        }
+
         #header-text {
             position: absolute;
             top: 10px;
@@ -44,7 +51,6 @@
             transform: translateX(-50%);
             color: #00ffcc;
             font-size: 18px;
-            font-family: 'Courier New', Courier, monospace;
             text-align: center;
             z-index: 11;
             animation: neon-flash-header 0.5s infinite;
@@ -78,7 +84,6 @@
             transform: translateX(-50%);
             color: #ff00cc;
             font-size: 16px;
-            font-family: 'Courier New', Courier, monospace;
             text-align: center;
             z-index: 11;
             animation: neon-flash-link 0.6s infinite;
@@ -98,46 +103,6 @@
             50% { opacity: 0.7; text-shadow: 0 0 5px #ff00cc, 0 0 10px #ff00cc; }
         }
 
-        .image-placeholder {
-            position: absolute;
-            top: calc(50px + 219.648px); /* Current position */
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 450px;
-            height: 333px;
-            background: url('blue-square.png') no-repeat center/cover;
-            z-index: 10;
-            box-shadow: 0 0 20px #00ffcc;
-            animation: neon-glow 3s linear infinite;
-            cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-            .image-placeholder {
-                top: calc(30px + 219.648px); /* Current position on mobile */
-                width: 56.25vw;
-                height: calc(56.25vw * 0.74);
-                transform: translate(-50%, -50%);
-            }
-        }
-
-        @keyframes neon-glow {
-            0% { box-shadow: 0 0 20px #00ffcc, 0 -10px 30px #00ffcc; }
-            25% { box-shadow: 0 0 20px #00ffcc, 10px 0 30px #00ffcc; }
-            50% { box-shadow: 0 0 20px #00ffcc, 0 10px 30px #00ffcc; }
-            75% { box-shadow: 0 0 20px #00ffcc, -10px 0 30px #00ffcc; }
-            100% { box-shadow: 0 0 20px #00ffcc, 0 -10px 30px #00ffcc; }
-        }
-
-        .image-square {
-            position: absolute;
-            border: none;
-            z-index: 2;
-            background-size: cover;
-            background-position: center;
-            cursor: pointer;
-        }
-
         #words-container {
             position: absolute;
             left: 50%;
@@ -149,37 +114,39 @@
             flex-wrap: wrap;
             justify-content: center;
             text-align: center;
-            display: none; /* Hidden by default */
-            bottom: calc(20px + 96px + 30px); /* Starts 1 inch (96px) + 30px padding above learn-more-button */
+            display: none;
+            bottom: 80px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc;
         }
 
         @media (max-width: 768px) {
             #words-container {
-                bottom: calc(10px + 96px + 30px); /* Adjusted for mobile */
+                bottom: 60px;
                 width: 95vw;
+                padding: 15px;
             }
         }
 
         .word {
-            color: #00ffcc; /* Changed to neon cyan */
-            font-size: calc(0.55vw + 5.5px); /* Increased by 10% from calc(0.5vw + 5px) */
-            margin: 0 8px 2px 0; /* Reduced vertical line spacing by 50% from 4px to 2px */
+            color: #ff00cc;
+            font-size: calc(0.6325vw + 6.325px);
+            margin: 0 8px 2px 0;
             white-space: nowrap;
-            text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc, 0 0 15px #00ffcc; /* Neon glow effect */
         }
 
         @media (max-width: 768px) {
             .word {
-                font-size: calc(0.825vw + 2.75px); /* Increased by 10% from calc(0.75vw + 2.5px) */
-                margin: 0 4px 1px 0; /* Reduced vertical line spacing by 50% from 2px to 1px */
-                text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc, 0 0 15px #00ffcc; /* Neon glow effect */
+                font-size: calc(0.94875vw + 3.1625px);
+                margin: 0 4px 1px 0;
             }
         }
 
         @media (max-width: 480px) {
             .word {
-                font-size: calc(1.1vw + 1.65px); /* Increased by 10% from calc(1vw + 1.5px) */
-                text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc, 0 0 15px #00ffcc; /* Neon glow effect */
+                font-size: calc(1.265vw + 1.8975px);
             }
         }
 
@@ -190,7 +157,6 @@
             transform: translateX(-50%);
             padding: 10px 20px;
             font-size: 16px;
-            font-family: 'Courier New', Courier, monospace;
             color: #ff00ff;
             background: none;
             border: 2px solid #ff00ff;
@@ -217,47 +183,680 @@
             0%, 100% { opacity: 1; box-shadow: 0 0 10px #ff00ff; }
             50% { opacity: 0.7; box-shadow: 0 0 20px #ff00ff; }
         }
-
-        .neon-border-0 { animation: neon-flash-0 0.1s infinite; }
-        .neon-border-1 { animation: neon-flash-1 0.1s infinite; }
-        .neon-border-2 { animation: neon-flash-2 0.1s infinite; }
-        .neon-border-3 { animation: neon-flash-3 0.1s infinite; }
-        .neon-border-4 { animation: neon-flash-4 0.1s infinite; }
-        .neon-border-5 { animation: neon-flash-5 0.1s infinite; }
-        .neon-border-6 { animation: neon-flash-6 0.1s infinite; }
-        .neon-border-7 { animation: neon-flash-7 0.1s infinite; }
-        .neon-border-8 { animation: neon-flash-8 0.1s infinite; }
-        .neon-border-9 { animation: neon-flash-9 0.1s infinite; }
-        .neon-border-10 { animation: neon-flash-10 0.1s infinite; }
-        .neon-border-11 { animation: neon-flash-11 0.1s infinite; }
-        .neon-border-12 { animation: neon-flash-12 0.1s infinite; }
-        .neon-border-13 { animation: neon-flash-13 0.1s infinite; }
-
-        @keyframes neon-flash-0 { 0% { box-shadow: 0 0 20px #ff00ff; } 25% { box-shadow: 0 0 20px #00ffff; } 50% { box-shadow: 0 0 20px #ffff00; } 75% { box-shadow: 0 0 20px #ff0000; } 100% { box-shadow: 0 0 20px #ff00ff; } }
-        @keyframes neon-flash-1 { 0% { box-shadow: 0 0 20px #00ff00; } 25% { box-shadow: 0 0 20px #ff00cc; } 50% { box-shadow: 0 0 20px #ff6600; } 75% { box-shadow: 0 0 20px #cc00ff; } 100% { box-shadow: 0 0 20px #00ff00; } }
-        @keyframes neon-flash-2 { 0% { box-shadow: 0 0 20px #ffff00; } 25% { box-shadow: 0 0 20px #ff0000; } 50% { box-shadow: 0 0 20px #ff00ff; } 75% { box-shadow: 0 0 20px #00ffff; } 100% { box-shadow: 0 0 20px #ffff00; } }
-        @keyframes neon-flash-3 { 0% { box-shadow: 0 0 20px #ff00cc; } 25% { box-shadow: 0 0 20px #00ff00; } 50% { box-shadow: 0 0 20px #cc00ff; } 75% { box-shadow: 0 0 20px #ff6600; } 100% { box-shadow: 0 0 20px #ff00cc; } }
-        @keyframes neon-flash-4 { 0% { box-shadow: 0 0 20px #ff0000; } 25% { box-shadow: 0 0 20px #ffff00; } 50% { box-shadow: 0 0 20px #00ffff; } 75% { box-shadow: 0 0 20px #ff00ff; } 100% { box-shadow: 0 0 20px #ff0000; } }
-        @keyframes neon-flash-5 { 0% { box-shadow: 0 0 20px #00ffff; } 25% { box-shadow: 0 0 20px #ff00cc; } 50% { box-shadow: 0 0 20px #00ff00; } 75% { box-shadow: 0 0 20px #cc00ff; } 100% { box-shadow: 0 0 20px #00ffff; } }
-        @keyframes neon-flash-6 { 0% { box-shadow: 0 0 20px #ff6600; } 25% { box-shadow: 0 0 20px #ff0000; } 50% { box-shadow: 0 0 20px #ffff00; } 75% { box-shadow: 0 0 20px #ff00cc; } 100% { box-shadow: 0 0 20px #ff6600; } }
-        @keyframes neon-flash-7 { 0% { box-shadow: 0 0 20px #cc00ff; } 25% { box-shadow: 0 0 20px #00ff00; } 50% { box-shadow: 0 0 20px #ff00ff; } 75% { box-shadow: 0 0 20px #00ffff; } 100% { box-shadow: 0 0 20px #cc00ff; } }
-        @keyframes neon-flash-8 { 0% { box-shadow: 0 0 20px #ff00ff; } 25% { box-shadow: 0 0 20px #ffff00; } 50% { box-shadow: 0 0 20px #ff0000; } 75% { box-shadow: 0 0 20px #00ff00; } 100% { box-shadow: 0 0 20px #ff00ff; } }
-        @keyframes neon-flash-9 { 0% { box-shadow: 0 0 20px #00ff00; } 25% { box-shadow: 0 0 20px #cc00ff; } 50% { box-shadow: 0 0 20px #ff00cc; } 75% { box-shadow: 0 0 20px #ff6600; } 100% { box-shadow: 0 0 20px #00ff00; } }
-        @keyframes neon-flash-10 { 0% { box-shadow: 0 0 20px #ffff00; } 25% { box-shadow: 0 0 20px #ff00ff; } 50% { box-shadow: 0 0 20px #00ffff; } 75% { box-shadow: 0 0 20px #ff0000; } 100% { box-shadow: 0 0 20px #ffff00; } }
-        @keyframes neon-flash-11 { 0% { box-shadow: 0 0 20px #ff00cc; } 25% { box-shadow: 0 0 20px #00ff00; } 50% { box-shadow: 0 0 20px #ff6600; } 75% { box-shadow: 0 0 20px #cc00ff; } 100% { box-shadow: 0 0 20px #ff00cc; } }
-        @keyframes neon-flash-12 { 0% { box-shadow: 0 0 20px #ff0000; } 25% { box-shadow: 0 0 20px #00ffff; } 50% { box-shadow: 0 0 20px #ff00ff; } 75% { box-shadow: 0 0 20px #ffff00; } 100% { box-shadow: 0 0 20px #ff0000; } }
-        @keyframes neon-flash-13 { 0% { box-shadow: 0 0 20px #00ffff; } 25% { box-shadow: 0 0 20px #ff00cc; } 50% { box-shadow: 0 0 20px #00ff00; } 75% { box-shadow: 0 0 20px #cc00ff; } 100% { box-shadow: 0 0 20px #00ffff; } }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/postprocessing/UnrealBloomPass.js"></script>
 </head>
 <body>
-    <div id="header-text">CLICK EACH UTXO IMAGE TO VIEW AND COLLECT ON HORIZON.MARKET</div>
+    <div id="header-text">CLICK EACH PLANET TO COLLECT AND VIEW THE ART ON HORIZON.MARKET</div>
     <a href="https://x.com/HnftPepe" id="x-link" target="_blank">https://x.com/HnftPepe</a>
-    <a href="https://horizon.market/collections/hnft-pepe-svg" id="image-placeholder" class="image-placeholder" target="_blank"></a>
     <div id="stars-container"></div>
-    <div id="images-container"></div>
+    <div id="container"></div>
     <div id="words-container"></div>
     <button id="learn-more-button">LEARN MORE</button>
     <script>
+        // Three.js setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 5000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('container').appendChild(renderer.domElement);
+
+        // Bloom layer
+        const BLOOM_LAYER = 1;
+        const bloomLayer = new THREE.Layers();
+        bloomLayer.enable(BLOOM_LAYER);
+
+        // Post-processing for bloom effect
+        const renderScene = new THREE.RenderPass(scene, camera);
+        const bloomPass = new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+        bloomPass.threshold = 0.1;
+        bloomPass.strength = 0.2;
+        bloomPass.radius = 0.8;
+        const bloomComposer = new THREE.EffectComposer(renderer);
+        bloomComposer.renderToScreen = false;
+        bloomComposer.addPass(renderScene);
+        bloomComposer.addPass(bloomPass);
+
+        const mixShader = {
+            uniforms: {
+                baseTexture: { value: null },
+                bloomTexture: { value: bloomComposer.renderTarget2.texture }
+            },
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform sampler2D baseTexture;
+                uniform sampler2D bloomTexture;
+                varying vec2 vUv;
+                void main() {
+                    gl_FragColor = texture2D(baseTexture, vUv) + vec4(1.0) * texture2D(bloomTexture, vUv);
+                }
+            `
+        };
+        const mixPass = new THREE.ShaderPass(new THREE.ShaderMaterial(mixShader), 'baseTexture');
+        const finalComposer = new THREE.EffectComposer(renderer);
+        finalComposer.addPass(renderScene);
+        finalComposer.addPass(mixPass);
+
+        const materials = {};
+        const darkMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+        const darkPointsMaterial = new THREE.PointsMaterial({ color: 0x000000, size: 0.5 });
+        const darkLineMaterial = new THREE.LineBasicMaterial({ color: 0x000000 });
+
+        function darkenNonBloomed(obj) {
+            if ((obj.isPoints || obj.isLine || obj.isMesh || obj.isSprite) && bloomLayer.test(obj.layers) === false) {
+                materials[obj.uuid] = obj.material;
+                if (obj.isPoints) obj.material = darkPointsMaterial;
+                else if (obj.isLine) obj.material = darkLineMaterial;
+                else if (obj.isMesh || obj.isSprite) obj.material = darkMaterial;
+            }
+        }
+
+        function restoreMaterial(obj) {
+            if (materials[obj.uuid]) {
+                obj.material = materials[obj.uuid];
+                delete materials[obj.uuid];
+            }
+        }
+
+        // Mouse interaction with OrbitControls
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.screenSpacePanning = false;
+        controls.minDistance = 50;
+        controls.maxDistance = 2000;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 1.0;
+
+        renderer.domElement.addEventListener('click', () => {
+            controls.autoRotate = !controls.autoRotate;
+        });
+
+        // Raycaster for planet clicking
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        function onMouseClick(event) {
+            event.preventDefault();
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(scene.children, true);
+            for (let i = 0; i < intersects.length; i++) {
+                const obj = intersects[i].object;
+                if (obj.userData.link) {
+                    window.open(obj.userData.link, '_blank');
+                    break;
+                }
+            }
+        }
+
+        window.addEventListener('click', onMouseClick, false);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffe0c0, 1.4);
+        directionalLight.position.set(0, -1, 1);
+        scene.add(directionalLight);
+        const pointLight = new THREE.PointLight(0xffffff, 1.2, 500);
+        pointLight.position.set(0, -150, 0);
+        scene.add(pointLight);
+
+        camera.position.set(300, 900, 0);
+        camera.lookAt(0, 900, 0);
+
+        // Create text sprite
+        function createTextSprite(text, color) {
+            const canvas = document.createElement('canvas');
+            canvas.width = text === 'HNFT PEPE SVG S1 COLLECTION' ? 1792 : 896;
+            canvas.height = 112;
+            const context = canvas.getContext('2d');
+            context.font = text === 'HNFT PEPE SVG S1 COLLECTION' ? 'Bold 49px Courier New' : 'Bold 56px Courier New';
+            context.fillStyle = color;
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.shadowColor = color;
+            context.shadowBlur = 10;
+            context.fillText(text, canvas.width / 2, 56);
+            const texture = new THREE.CanvasTexture(canvas);
+            const material = new THREE.SpriteMaterial({
+                map: texture,
+                transparent: true,
+                blending: THREE.AdditiveBlending
+            });
+            const sprite = new THREE.Sprite(material);
+            sprite.scale.set(text === 'HNFT PEPE SVG S1 COLLECTION' ? 350 : 175, 21.875, 1);
+            sprite.layers.enable(BLOOM_LAYER);
+            return { sprite, texture };
+        }
+
+        // Create sun
+        const sunPivot = new THREE.Object3D();
+        scene.add(sunPivot);
+        const sunGroup = new THREE.Object3D();
+        sunPivot.add(sunGroup);
+        sunGroup.position.set(0, 0, 0);
+        const sunGeometry = new THREE.SphereGeometry(200, 32, 32);
+        const sunTexture = new THREE.TextureLoader().load('https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/blue-square.png');
+        sunTexture.wrapS = sunTexture.wrapT = THREE.RepeatWrapping;
+        const sunMaterial = new THREE.ShaderMaterial({
+            uniforms: {
+                tDiffuse: { value: sunTexture },
+                time: { value: 0.0 }
+            },
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform sampler2D tDiffuse;
+                uniform float time;
+                varying vec2 vUv;
+                void main() {
+                    vec2 uv = vUv * mix(2.0, 3.0, sin(time * 0.2) * 0.5 + 0.5);
+                    vec2 offset = vec2(sin(time * 0.1), cos(time * 0.1)) * 0.05;
+                    gl_FragColor = texture2D(tDiffuse, uv + offset);
+                    if (gl_FragColor.a < 0.1) discard;
+                }
+            `,
+            transparent: true
+        });
+        const sun = new THREE.Mesh(sunGeometry, sunMaterial);
+        sun.userData.link = 'https://horizon.market/collections/hnft-pepe-svg';
+        sun.layers.enable(BLOOM_LAYER);
+        sunGroup.add(sun);
+
+        // Add "HNFT PEPE SVG S1 COLLECTION" text for sun
+        const { sprite: sunTextSprite, texture: sunTextTexture } = createTextSprite('HNFT PEPE SVG S1 COLLECTION', '#00ffcc');
+        sunTextSprite.position.set(0, 270, 0);
+        sunGroup.add(sunTextSprite);
+
+        // Planet configurations with provided image links and asset names
+        const planetConfigs = [
+            {
+                radius: 50, distance: 400, effect: 'particle1', orbitSpeed: 0.005,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/1.png',
+                link: 'https://horizon.market/assets/A9392207840692937001',
+                name: 'HNFT PEPE', hasRing: false
+            },
+            {
+                radius: 50, distance: 550, effect: 'cells1', orbitSpeed: 0.0048,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/2.png',
+                link: 'https://horizon.market/assets/A5968356289406155902',
+                name: 'VECTORED PEPE', hasRing: false
+            },
+            {
+                radius: 50, distance: 700, effect: 'jelly1', orbitSpeed: 0.0046,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/3.png',
+                link: 'https://horizon.market/assets/A8224440913037959138',
+                name: 'REBEL PEPE', hasRing: false
+            },
+            {
+                radius: 50, distance: 850, effect: 'blobbs1', orbitSpeed: 0.0044,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/4.png',
+                link: 'https://horizon.market/assets/A12327786294019686202',
+                name: 'KEVIN SOCKS', hasRing: false
+            },
+            {
+                radius: 50, distance: 1000, effect: 'chase1', orbitSpeed: 0.0042,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/5.png',
+                link: 'https://horizon.market/assets/A12371780939909063770',
+                name: 'KEVIN CHAD', hasRing: false
+            },
+            {
+                radius: 50, distance: 1150, effect: 'particle2', orbitSpeed: 0.0040,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/6.png',
+                link: 'https://horizon.market/assets/A12307493453657792498',
+                name: 'CUBED KEVIN', hasRing: false
+            },
+            {
+                radius: 50, distance: 1300, effect: 'cells2', orbitSpeed: 0.0038,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/7.png',
+                link: 'https://horizon.market/assets/A12361973031647112570',
+                name: 'RAIDER PEPE', hasRing: false
+            },
+            {
+                radius: 50, distance: 1450, effect: 'jelly2', orbitSpeed: 0.0036,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/8.png',
+                link: 'https://horizon.market/assets/A12354135474386500298',
+                name: 'HOT LIPS PEPE', hasRing: false
+            },
+            {
+                radius: 50, distance: 1600, effect: 'blobbs2', orbitSpeed: 0.0034,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/9.png',
+                link: 'https://horizon.market/assets/A12316115956968399044',
+                name: 'PRUNED WOJAK', hasRing: false
+            },
+            {
+                radius: 50, distance: 1750, effect: 'chase2', orbitSpeed: 0.0032,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/10.png',
+                link: 'https://horizon.market/assets/A12394435489634753420',
+                name: 'CUBISM PEPE', hasRing: false
+            },
+            {
+                radius: 50, distance: 1900, effect: 'particle3', orbitSpeed: 0.0030,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/11.png',
+                link: 'https://horizon.market/assets/A8208301482075435000',
+                name: 'ANON', hasRing: false
+            },
+            {
+                radius: 50, distance: 2050, effect: 'cells3', orbitSpeed: 0.0028,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/12.png',
+                link: 'https://horizon.market/assets/A12301588492677696204',
+                name: 'BIGGIE PEPE', hasRing: false
+            },
+            {
+                radius: 50, distance: 2200, effect: 'jelly3', orbitSpeed: 0.0026,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/13.png',
+                link: 'https://horizon.market/assets/A6449498850632000461',
+                name: '2PAC PEPE', hasRing: false
+            },
+            {
+                radius: 50, distance: 2350, effect: 'chase3', orbitSpeed: 0.0024,
+                image: 'https://raw.githubusercontent.com/HPep24/HP-SVGs-S1/main/images/14.png',
+                link: 'https://horizon.market/assets/A1160623899280301757',
+                name: 'CUBED COCO', hasRing: false
+            }
+        ];
+
+        // Custom shader for planet effects
+        const planetShader = {
+            particle1: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(3.0, 3.6, sin(time * 0.8) * 0.5 + 0.5);
+                        vec2 offset = vec2(sin(time * 0.4), cos(time * 0.4)) * 0.1;
+                        gl_FragColor = texture2D(tDiffuse, uv + offset);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            },
+            cells1: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(3.6, 4.8, sin(time * 0.6) * 0.5 + 0.5);
+                        gl_FragColor = texture2D(tDiffuse, uv);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            },
+            jelly1: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(2.4, 3.0, sin(time * 0.3) * 0.5 + 0.5);
+                        vec2 offset = vec2(cos(time * 0.3), sin(time * 0.3)) * 0.05;
+                        gl_FragColor = texture2D(tDiffuse, uv + offset);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            },
+            blobbs1: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(3.0, 3.6, sin(time * 0.4) * 0.5 + 0.5);
+                        vec2 offset = vec2(sin(time * 0.2), cos(time * 0.2)) * 0.15;
+                        gl_FragColor = texture2D(tDiffuse, uv + offset);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            },
+            chase1: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(2.4, 3.0, sin(time * 0.5) * 0.5 + 0.5);
+                        vec2 offset = vec2(sin(time * 0.3), cos(time * 0.3)) * 0.2;
+                        gl_FragColor = texture2D(tDiffuse, uv + offset);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            },
+            particle2: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(3.6, 4.2, sin(time * 0.7) * 0.5 + 0.5);
+                        vec2 offset = vec2(cos(time * 0.3), sin(time * 0.3)) * 0.1;
+                        gl_FragColor = texture2D(tDiffuse, uv + offset);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            },
+            cells2: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(4.2, 5.4, sin(time * 0.5) * 0.5 + 0.5);
+                        gl_FragColor = texture2D(tDiffuse, uv);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            },
+            jelly2: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(3.0, 3.6, sin(time * 0.4) * 0.5 + 0.5);
+                        vec2 offset = vec2(cos(time * 0.2), sin(time * 0.2)) * 0.05;
+                        gl_FragColor = texture2D(tDiffuse, uv + offset);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            },
+            blobbs2: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(3.6, 4.2, sin(time * 0.3) * 0.5 + 0.5);
+                        vec2 offset = vec2(sin(time * 0.15), cos(time * 0.15)) * 0.2;
+                        gl_FragColor = texture2D(tDiffuse, uv + offset);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            },
+            chase2: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(3.0, 3.6, sin(time * 0.4) * 0.5 + 0.5);
+                        vec2 offset = vec2(sin(time * 0.25), cos(time * 0.25)) * 0.15;
+                        gl_FragColor = texture2D(tDiffuse, uv + offset);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            },
+            particle3: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(2.4, 3.0, sin(time * 0.9) * 0.5 + 0.5);
+                        vec2 offset = vec2(cos(time * 0.5), sin(time * 0.5)) * 0.05;
+                        gl_FragColor = texture2D(tDiffuse, uv + offset);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            },
+            cells3: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(3.0, 4.2, sin(time * 0.7) * 0.5 + 0.5);
+                        gl_FragColor = texture2D(tDiffuse, uv);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            },
+            jelly3: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(2.4, 3.0, sin(time * 0.2) * 0.5 + 0.5);
+                        vec2 offset = vec2(cos(time * 0.2), sin(time * 0.2)) * 0.05;
+                        gl_FragColor = texture2D(tDiffuse, uv + offset);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            },
+            chase3: {
+                uniforms: { tDiffuse: { value: null }, time: { value: 0.0 } },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform sampler2D tDiffuse;
+                    uniform float time;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 uv = vUv * mix(2.4, 3.0, sin(time * 0.3) * 0.5 + 0.5);
+                        vec2 offset = vec2(sin(time * 0.2), cos(time * 0.2)) * 0.1;
+                        gl_FragColor = texture2D(tDiffuse, uv + offset);
+                        if (gl_FragColor.a < 0.1) discard;
+                    }
+                `
+            }
+        };
+
+        // Create planets with random starting angles
+        const planetPivots = [];
+        const planetGroups = [];
+        const textSprites = [];
+        const textureLoader = new THREE.TextureLoader();
+        planetConfigs.forEach((config, index) => {
+            const pivot = new THREE.Object3D();
+            pivot.rotation.y = Math.random() * Math.PI * 2;
+            scene.add(pivot);
+            const group = new THREE.Object3D();
+            pivot.add(group);
+            group.position.set(config.distance, 0, 0);
+
+            // Load texture
+            const texture = textureLoader.load(config.image);
+            texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+
+            // Create shader material based on effect
+            const shader = planetShader[config.effect];
+            const material = new THREE.ShaderMaterial({
+                uniforms: {
+                    tDiffuse: { value: texture },
+                    time: { value: 0.0 }
+                },
+                vertexShader: shader.vertexShader,
+                fragmentShader: shader.fragmentShader,
+                transparent: true
+            });
+
+            // Create planet mesh
+            const geometry = new THREE.SphereGeometry(config.radius, 32, 32);
+            const planet = new THREE.Mesh(geometry, material);
+            planet.userData.link = config.link;
+            planet.layers.enable(BLOOM_LAYER);
+            group.add(planet);
+
+            // Add asset name text
+            const { sprite: textSprite, texture: textTexture } = createTextSprite(config.name, '#00ffcc');
+            textSprite.position.set(0, config.radius + 50, 0);
+            group.add(textSprite);
+            textSprites.push({ sprite: textSprite, texture: textTexture });
+
+            planetPivots.push(pivot);
+            planetGroups.push(group);
+        });
+
+        // Background stars
+        function createStars(count = 10000) {
+            const starCount = count;
+            const starPositions = new Float32Array(starCount * 3);
+            const starColors = new Float32Array(starCount * 3);
+            const starSizes = new Float32Array(starCount);
+            for (let i = 0; i < starCount; i++) {
+                starPositions[i * 3] = (Math.random() - 0.5) * 6000;
+                starPositions[i * 3 + 1] = (Math.random() - 0.5) * 6000;
+                starPositions[i * 3 + 2] = (Math.random() - 0.5) * 6000;
+                const brightness = 0.2 + Math.random() * 0.8;
+                const starType = Math.random();
+                if (starType < 0.7) {
+                    starColors[i * 3] = brightness * 0.9;
+                    starColors[i * 3 + 1] = brightness * 0.9;
+                    starColors[i * 3 + 2] = brightness;
+                } else {
+                    starColors[i * 3] = brightness;
+                    starColors[i * 3 + 1] = brightness * 0.6;
+                    starColors[i * 3 + 2] = brightness * 0.3;
+                }
+                starSizes[i] = 0.2 + Math.random() * 0.3;
+            }
+            const starGeo = new THREE.BufferGeometry();
+            starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+            starGeo.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
+            starGeo.setAttribute('size', new THREE.BufferAttribute(starSizes, 1));
+            const starMat = new THREE.PointsMaterial({
+                size: 0.5,
+                vertexColors: true,
+                blending: THREE.AdditiveBlending,
+                transparent: true,
+                sizeAttenuation: true
+            });
+            const stars = new THREE.Points(starGeo, starMat);
+            stars.layers.enable(0);
+            scene.add(stars);
+        }
+        createStars(10000);
+
         // Starry Background
         const starsContainer = document.getElementById('stars-container');
         for (let i = 0; i < 200; i++) {
@@ -273,7 +872,7 @@
             starsContainer.appendChild(star);
         }
 
-        // Words Below Blue Square
+        // Words Below
         const wordsContainer = document.getElementById('words-container');
         const text = 'THE HNFT PEPE SVG SERIES 1 COLLECTION IS A DISTINCTIVE SET OF 14 EARLY SVG ART STAMPS, INDELIBLY STAMPED ON BITCOIN VIA THE STAMPCHAIN PROTOCOL—THE MOST ROBUST AND LASTING TECHNIQUE AVAILABLE. ROOTED IN BITCOIN’S UTXO SET, THESE WORKS ARE INTEGRAL TO THE BLOCKCHAIN ITSELF. CREATED USING THE "LEGACY" METHOD OF STAMPCHAIN ART PRESERVATION, EACH SVG EXEMPLIFIES "COMPRESSIONISM," A GROUNDBREAKING DIGITAL ART STYLE. WITH FILE SIZES UNDER 7KB AND ALL MINTED BEFORE THE 100K STAMPCHAIN ASSET MILESTONE, THESE SLEEK DESIGNS MERGE ENDURING STABILITY WITH ARTISTIC INNOVATION. BITCOIN STAMPS AND COMPRESSIONISM BLEND TECHNOLOGICAL PERMANENCE WITH DIGITAL ARTISTRY. STAMPS EMBED DATA INTO BITCOIN’S UNSPENT TRANSACTION OUTPUTS (UTXOS) VIA THE COUNTERPARTY PROTOCOL, ENSURING DURABILITY. UTXOS, TRACKED BY EVERY FULL NODE TO PREVENT DOUBLE-SPENDING, ARE CENTRAL TO BITCOIN’S TRANSACTION MODEL.';
         const words = text.split(' ');
@@ -304,246 +903,83 @@
             }
         });
 
-        // Image Squares with Moving, Flashing Neon Borders, Random Size Changes, and Clickable Links
-        const imagesContainer = document.getElementById('images-container');
-        const isMobile = window.innerWidth <= 768;
-        const maxSize = isMobile ? { width: 33.75 * 0.75, height: 33.75 * 0.9 * 0.75 } : { width: 262.5 * 0.75, height: 236.25 * 0.75 };
-        const baseSizes = isMobile
-            ? [
-                  { width: 30, height: 30 }, // 1.png 400x400
-                  { width: 22, height: 30 }, // 2.png 295x400
-                  { width: 25, height: 30 }, // 3.png 333x400
-                  { width: 25, height: 30 }, // 4.png 333x400
-                  { width: 30, height: 30 }, // 5.png 400x400
-                  { width: 30, height: 30 }, // 6.png 400x400
-                  { width: 30, height: 30 }, // 7.png 400x400
-                  { width: 21, height: 30 }, // 8.png 286x400
-                  { width: 30, height: 30 }, // 9.png 400x400
-                  { width: 30, height: 30 }, // 10.png 400x400
-                  { width: 30, height: 30 }, // 11.png 400x400
-                  { width: 30, height: 30 }, // 12.png 400x400
-                  { width: 30, height: 30 }, // 13.png 400x400
-                  { width: 24, height: 24 }  // 14.png 320x320
-              ]
-            : [
-                  { width: 90, height: 90 }, // 1.png 400x400
-                  { width: 66, height: 90 }, // 2.png 295x400
-                  { width: 75, height: 90 }, // 3.png 333x400
-                  { width: 75, height: 90 }, // 4.png 333x400
-                  { width: 90, height: 90 }, // 5.png 400x400
-                  { width: 90, height: 90 }, // 6.png 400x400
-                  { width: 90, height: 90 }, // 7.png 400x400
-                  { width: 64, height: 90 }, // 8.png 286x400
-                  { width: 90, height: 90 }, // 9.png 400x400
-                  { width: 90, height: 90 }, // 10.png 400x400
-                  { width: 90, height: 90 }, // 11.png 400x400
-                  { width: 90, height: 90 }, // 12.png 400x400
-                  { width: 90, height: 90 }, // 13.png 400x400
-                  { width: 72, height: 72 }  // 14.png 320x320
-              ].map(size => ({
-                  width: Math.min(size.width, maxSize.width),
-                  height: Math.min(size.height, maxSize.height)
-              }));
+        // Animation loop
+        let lastTime = performance.now();
+        function animate(time) {
+            requestAnimationFrame(animate);
+            const deltaTime = (time - lastTime) / 1000;
+            lastTime = time;
 
-        const neonColors = [
-            '#ff00ff', '#00ffff', '#ffff00', '#ff0000',
-            '#ff00cc', '#00ff00', '#ff6600', '#cc00ff'
-        ];
+            controls.update();
 
-        const imageLinks = [
-            'https://horizon.market/assets/A9392207840692937001',
-            'https://horizon.market/assets/A5968356289406155902',
-            'https://horizon.market/assets/A8224440913037959138',
-            'https://horizon.market/assets/A12327786294019686202',
-            'https://horizon.market/assets/A12371780939909063770',
-            'https://horizon.market/assets/A12307493453657792498',
-            'https://horizon.market/assets/A12361973031647112570',
-            'https://horizon.market/assets/A12354135474386500298',
-            'https://horizon.market/assets/A12316115956968399044',
-            'https://horizon.market/assets/A12394435489634753420',
-            'https://horizon.market/assets/A8208301482075435000',
-            'https://horizon.market/assets/A12301588492677696204',
-            'https://horizon.market/assets/A6449498850632000461',
-            'https://horizon.market/assets/A1160623899280301757'
-        ];
-
-        const imageFiles = [
-            'images/1.png',
-            'images/2.png',
-            'images/3.png',
-            'images/4.png',
-            'images/5.png',
-            'images/6.png',
-            'images/7.png',
-            'images/8.png',
-            'images/9.png',
-            'images/10.png',
-            'images/11.png',
-            'images/12.png',
-            'images/13.png',
-            'images/14.png'
-        ];
-
-        baseSizes.slice(0, 14).forEach((baseSize, index) => {
-            const numColors = Math.floor(Math.random() * 2) + 4;
-            const selectedColors = [];
-            const availableColors = [...neonColors];
-            for (let i = 0; i < numColors; i++) {
-                const colorIndex = Math.floor(Math.random() * availableColors.length);
-                selectedColors.push(availableColors.splice(colorIndex, 1)[0]);
-            }
-
-            const styleSheet = document.createElement('style');
-            document.head.appendChild(styleSheet);
-            const keyframes = `
-                @keyframes neon-flash-${index} {
-                    0% { box-shadow: 0 0 20px ${selectedColors[0]}; }
-                    ${100 / numColors}% { box-shadow: 0 0 20px ${selectedColors[1]}; }
-                    ${200 / numColors}% { box-shadow: 0 0 20px ${selectedColors[2]}; }
-                    ${300 / numColors}% { box-shadow: 0 0 20px ${selectedColors[3]}; }
-                    ${numColors === 5 ? `${400 / numColors}% { box-shadow: 0 0 20px ${selectedColors[4]}; }` : ''}
-                    100% { box-shadow: 0 0 20px ${selectedColors[0]}; }
+            // Update planet shader uniforms and text sprites
+            planetGroups.forEach((group, index) => {
+                const planet = group.children[0]; // Planet mesh
+                if (planet.material.uniforms.time) {
+                    planet.material.uniforms.time.value = time * 0.0005;
                 }
-            `;
-            styleSheet.sheet.insertRule(keyframes, 0);
-
-            const imageSquare = document.createElement('a');
-            imageSquare.href = imageLinks[index];
-            imageSquare.target = '_blank';
-            imageSquare.className = `image-square neon-border-${index}`;
-            imageSquare.style.width = `${baseSize.width}px`;
-            imageSquare.style.height = `${baseSize.height}px`;
-            imageSquare.style.left = `${Math.random() * (window.innerWidth - baseSize.width)}px`;
-            imageSquare.style.top = `${Math.random() * (window.innerHeight - baseSize.height)}px`;
-            imageSquare.style.background = `url('${imageFiles[index]}') no-repeat center/cover`;
-            imagesContainer.appendChild(imageSquare);
-
-            let isHorizontal = Math.random() > 0.5;
-            let x = parseFloat(imageSquare.style.left);
-            let y = parseFloat(imageSquare.style.top);
-            let vx = isHorizontal ? (Math.random() * 0.5 + 0.2) * (Math.random() > 0.5 ? 1 : -1) : 0;
-            let vy = !isHorizontal ? (Math.random() * 0.5 + 0.2) * (Math.random() > 0.5 ? 1 : -1) : 0;
-            let currentSize = { width: baseSize.width, height: baseSize.height };
-
-            function changeSize() {
-                const scale = 0.5 + Math.random() * 0.5;
-                currentSize.width = Math.min(baseSize.width * scale, maxSize.width);
-                currentSize.height = (baseSize.height / baseSize.width) * currentSize.width; // Maintain aspect ratio
-                currentSize.height = Math.min(currentSize.height, maxSize.height); // Cap height
-                imageSquare.style.width = `${currentSize.width}px`;
-                imageSquare.style.height = `${currentSize.height}px`;
-                setTimeout(changeSize, Math.random() * 5000 + 2000);
-            }
-            changeSize();
-
-            function updateImageSquare() {
-                x += vx;
-                y += vy;
-
-                // Bounce off window boundaries
-                if (isHorizontal) {
-                    if (x <= 0 || x >= window.innerWidth - currentSize.width) {
-                        vx *= -1;
-                        x = Math.max(0, Math.min(x, window.innerWidth - currentSize.width));
-                    }
-                } else {
-                    if (y <= 0 || y >= window.innerHeight - currentSize.height) {
-                        vy *= -1;
-                        y = Math.max(0, Math.min(y, window.innerHeight - currentSize.height));
-                    }
-                }
-
-                // Bounce off blue square
-                const placeholder = document.getElementById('image-placeholder');
-                const placeholderRect = placeholder.getBoundingClientRect();
-                const imageRect = {
-                    left: x,
-                    right: x + currentSize.width,
-                    top: y,
-                    bottom: y + currentSize.height
-                };
-                const placeholderBounds = {
-                    left: placeholderRect.left,
-                    right: placeholderRect.right,
-                    top: placeholderRect.top,
-                    bottom: placeholderRect.bottom
-                };
-
-                if (
-                    imageRect.right > placeholderBounds.left &&
-                    imageRect.left < placeholderBounds.right &&
-                    imageRect.bottom > placeholderBounds.top &&
-                    imageRect.top < placeholderBounds.bottom
-                ) {
-                    // Calculate distances to each edge
-                    const dxLeft = Math.abs(imageRect.right - placeholderBounds.left);
-                    const dxRight = Math.abs(imageRect.left - placeholderBounds.right);
-                    const dyTop = Math.abs(imageRect.bottom - placeholderBounds.top);
-                    const dyBottom = Math.abs(imageRect.top - placeholderBounds.bottom);
-                    const minDistance = Math.min(dxLeft, dxRight, dyTop, dyBottom);
-
-                    // Bounce based on closest edge
-                    if (minDistance === dxLeft) {
-                        vx = -Math.abs(vx); // Bounce left
-                        x = placeholderBounds.left - currentSize.width - 1;
-                    } else if (minDistance === dxRight) {
-                        vx = Math.abs(vx); // Bounce right
-                        x = placeholderBounds.right + 1;
-                    }
-                    if (minDistance === dyTop) {
-                        vy = -Math.abs(vy); // Bounce up
-                        y = placeholderBounds.top - currentSize.height - 1;
-                    } else if (minDistance === dyBottom) {
-                        vy = Math.abs(vy); // Bounce down
-                        y = placeholderBounds.bottom + 1;
-                    }
-                }
-
-                imageSquare.style.left = `${x}px`;
-                imageSquare.style.top = `${y}px`;
-
-                requestAnimationFrame(updateImageSquare);
-            }
-            updateImageSquare();
-
-            setInterval(() => {
-                isHorizontal = !isHorizontal;
-                vx = isHorizontal ? (Math.random() * 0.5 + 0.2) * (Math.random() > 0.5 ? 1 : -1) : 0;
-                vy = !isHorizontal ? (Math.random() * 0.5 + 0.2) * (Math.random() > 0.5 ? 1 : -1) : 0;
-            }, 10000);
-        });
-
-        window.addEventListener('resize', () => {
-            const images = imagesContainer.children;
-            Array.from(images).forEach((image, index) => {
-                const newSize = baseSizes[index];
-                let scale = parseFloat(image.style.width) / baseSizes[index].width;
-                image.style.width = `${Math.min(newSize.width * scale, maxSize.width)}px`;
-                image.style.height = `${Math.min(newSize.height * scale, maxSize.height)}px`;
-                let x = parseFloat(image.style.left);
-                let y = parseFloat(image.style.top);
-                x = Math.min(x, window.innerWidth - newSize.width * scale);
-                y = Math.min(y, window.innerHeight - newSize.height * scale);
-                image.style.left = `${x}px`;
-                image.style.top = `${y}px`;
+                // Update text sprite opacity and glow to match header
+                const textSprite = textSprites[index].sprite;
+                const t = (Math.sin(time * 0.002) * 0.5 + 0.5); // Match 0.5s animation
+                textSprite.material.opacity = 0.7 + 0.3 * t;
+                // Simulate text-shadow change
+                const shadowIntensity = 5 + 5 * t; // Interpolate between 5px and 10px
+                const canvas = textSprites[index].texture.image;
+                const context = canvas.getContext('2d');
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                context.font = 'Bold 56px Courier New';
+                context.fillStyle = '#00ffcc';
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                context.shadowColor = '#00ffcc';
+                context.shadowBlur = shadowIntensity;
+                context.fillText(planetConfigs[index].name, canvas.width / 2, 56);
+                textSprites[index].texture.needsUpdate = true;
             });
 
-            // Dynamically position wordsContainer between blue square and learn-more-button
-            const placeholder = document.querySelector('.image-placeholder');
-            const learnMore = document.getElementById('learn-more-button');
-            const placeholderRect = placeholder.getBoundingClientRect();
-            const learnMoreRect = learnMore.getBoundingClientRect();
-            const gap = 20; // Minimum gap in pixels to prevent overlap
-            const availableHeight = learnMoreRect.top - placeholderRect.bottom - gap;
-            if (availableHeight > 0) {
-                wordsContainer.style.top = `${placeholderRect.bottom + gap}px`;
-                wordsContainer.style.bottom = `${window.innerHeight - learnMoreRect.top + gap}px`;
-            }
+            // Update sun shader uniform and text sprite
+            sun.material.uniforms.time.value = time * 0.0005;
+            const t = (Math.sin(time * 0.002) * 0.5 + 0.5); // Match 0.5s animation
+            sunTextSprite.material.opacity = 0.7 + 0.3 * t;
+            const sunShadowIntensity = 5 + 5 * t;
+            const sunCanvas = sunTextTexture.image;
+            const sunContext = sunCanvas.getContext('2d');
+            sunContext.clearRect(0, 0, sunCanvas.width, sunCanvas.height);
+            sunContext.font = 'Bold 49px Courier New';
+            sunContext.fillStyle = '#00ffcc';
+            sunContext.textAlign = 'center';
+            sunContext.textBaseline = 'middle';
+            sunContext.shadowColor = '#00ffcc';
+            sunContext.shadowBlur = sunShadowIntensity;
+            sunContext.fillText('HNFT PEPE SVG S1 COLLECTION', sunCanvas.width / 2, 56);
+            sunTextTexture.needsUpdate = true;
+
+            // Orbit and rotate with different speeds
+            sunPivot.rotation.y += 0.001;
+            sunGroup.rotation.y += 0.001;
+            planetPivots.forEach((pivot, index) => {
+                pivot.rotation.y += planetConfigs[index].orbitSpeed; // Use individual orbit speed
+                planetGroups[index].rotation.y += 0.01 - index * 0.0005;
+            });
+
+            // Selective bloom render
+            scene.traverse(darkenNonBloomed);
+            bloomComposer.render();
+            scene.traverse(restoreMaterial);
+            finalComposer.render();
+        }
+        animate(performance.now());
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            bloomComposer.setSize(window.innerWidth, window.innerHeight);
+            finalComposer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        // Initial positioning on load
         window.dispatchEvent(new Event('resize'));
     </script>
 </body>
 </html>
-```
